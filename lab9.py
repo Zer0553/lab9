@@ -12,6 +12,8 @@ class Registr:
         else:
             con = sqlite3.connect('Users.sqlite')
             cur = con.cursor()
+            cur.execute(' create table if not exists Users(Username TEXT,Password TEXT)')
+            con.commit()
             cur.execute('SELECT Username FROM Users')
             for i in cur.fetchall():
                 if username == i[0]:
@@ -30,6 +32,7 @@ class Registr:
                     self.window_Reg.destroy()
 
     def __init__(self):
+        window_Entry.destroy()
         self.window_Reg = Tk()
         self.window_Reg.title('Регистрация')
         self.window_Reg.geometry('300x300')
@@ -63,6 +66,8 @@ class Login_in:
         else:
             con = sqlite3.connect('Users.sqlite')
             cur = con.cursor()
+            cur.execute(' create table if not exists Users(Username TEXT,Password TEXT)')
+            con.commit()
             cur.execute('SELECT * FROM Users')
             for i in cur.fetchall():
                 if username == i[0]:
@@ -71,7 +76,7 @@ class Login_in:
                         msg = "Вы успешно зашли"
                         mb.showinfo("Успешно", msg)
                         self.window_Login.destroy()
-                        return 
+                        return
                     else:
                         msg = 'Пароль не совпадает'
                         mb.showerror("Ошибка", msg)
@@ -83,6 +88,7 @@ class Login_in:
 
 
     def __init__(self):
+        window_Entry.destroy()
         self.window_Login = Tk()
         self.window_Login.title('Вход')
         self.window_Login.geometry('300x250')
@@ -103,14 +109,14 @@ class Login_in:
         self.window_Login.mainloop()
 
 
-class App:
-    window_Entry = Tk()
-    window_Entry.title('Lab 9')
-    window_Entry.geometry('250x250')
-    window_Entry.eval('tk::PlaceWindow . center')
-    loginin = Button(window_Entry, text='Вход', command=Login_in)
-    reg = Button(window_Entry, text='Регистрация', command=Registr)
-    loginin.pack(padx=10, pady=8)
-    reg.pack(padx=10, pady=8)
 
-    window_Entry.mainloop()
+window_Entry = Tk()
+window_Entry.title('Lab 9')
+window_Entry.geometry('250x250')
+window_Entry.eval('tk::PlaceWindow . center')
+loginin = Button(window_Entry, text='Вход', command=Login_in)
+reg = Button(window_Entry, text='Регистрация', command=Registr)
+loginin.pack(padx=10, pady=8)
+reg.pack(padx=10, pady=8)
+
+window_Entry.mainloop()
